@@ -1,12 +1,12 @@
 import { SlashCommandBuilder } from "discord.js";
 
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("server")
-    .setDescription("Provides infirmation about server."),
-  async execute(interaction) {
-    await interaction.reply(
-      `This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`
-    );
-  },
-};
+const data = new SlashCommandBuilder()
+  .setName("server")
+  .setDescription("Provides infirmation about server.");
+async function execute(interaction) {
+  await interaction.reply(
+    `This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`
+  );
+}
+
+export { data, execute };

@@ -1,27 +1,30 @@
-import { Client, GatewayIntentBits } from "discord.js";
-import dotenv from "dotenv";
+import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
+import { conf } from "./config.js";
 
-dotenv.config();
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-const client = new Client({ intents: [GatewayIntentBits.GuildMessages] });
+client.commands = new Collection();
 
-client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+client.once(Events.ClientReady, (c) => {
+  console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
-client.on("message", (msg) => {
-  console.log(msg);
-  if (msg.startsWith("!")) {
-    msg.channel.send("I hear you.");
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
+
+  const command = interaction.client.commands.get(interaction.commandName);
+
+  if (!command) {
+    console.error(`No command matching ${interaction.commandName} was found.`);
+    return;
+  }
+
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(`Error executing ${interaction.commandName}`);
+    console.error(error);
   }
 });
 
-// client.on("interactionCreate", async (interaction) => {
-//   if (!interaction.isChatInputCommand()) return;
-//
-//   if (interaction.commandName === "ping") {
-//     await interaction.reply("Pong!");
-//   }
-// });
-
-client.login(process.env.token);
+client.login(conf.token);

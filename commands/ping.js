@@ -4,7 +4,7 @@ const data = new SlashCommandBuilder()
   .setName("ping")
   .setDescription("Replace with pong!");
 async function execute(interaction) {
-  await interaction.replay("pong!");
+  await interaction.reply("pong!");
 }
 
 export { data, execute };

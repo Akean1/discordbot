@@ -1,32 +1,24 @@
 import { REST, Routes } from "discord.js";
-import dotenv from "dotenv";
 import fs from "node:fs";
+import { conf } from "./config.js";
 
-dotenv.config();
+const commands = conf.commands.map((cmd) => cmd.data.toJSON());
 
-const commands = [];
-const commanFiles = fs
-  .readdirSync("./commands")
-  .filter((file) => file.endsWith(".js"));
+// for (const command of conf.commands) {
+//   commands.push(command[1].data.toJSON());
+//   // console.log(command[1].data.toJSON());
+// }
 
-for (const file of commanFiles) {
-  console.log(file);
-  const command = await import(`./commands/${file}`);
-  console.dir(command);
-  commands.push(command.data.toJSON());
-}
+// console.log(conf.commands)
 
-const rest = new REST({ version: "10" }).setToken(process.env.token);
+const rest = new REST({ version: "10" }).setToken(conf.token);
 (async () => {
   try {
     console.log(
       `Started refreshing ${commands.length} application (/) commands.`
     );
     const data = await rest.put(
-      Routes.applicationGuildCommands(
-        process.env.clientId,
-        process.env.guildId
-      ),
+      Routes.applicationGuildCommands(conf.clientId, conf.guildId),
       { body: commands }
     );
     console.log(

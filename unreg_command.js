@@ -1,15 +1,8 @@
 import { REST, Routes } from "discord.js";
-import dotenv from "dotenv";
+import { conf } from "./config";
 
-dotenv.config();
-const rest = new REST({ version: "10" }).setToken(process.env.token);
-// // for guild-based commands
-// rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: [] })
-//  .then(() => console.log('Successfully deleted all guild commands.'))
-//    .catch(console.error);
-//
-// for global commands
-rest
-  .put(Routes.applicationCommands(process.env.clientId), { body: [] })
+
+const rest = new REST({ version: "10" }).setToken(conf.token);
+rest.put(Routes.applicationCommands(conf.clientId), { body: [] })
   .then(() => console.log("Successfully deleted all application commands."))
   .catch(console.error);

@@ -1,15 +1,15 @@
 import { REST, Routes } from "discord.js";
-import dotenv from "dotenv";
+import { conf } from "./config";
 
-dotenv.config();
 
-const rest = new REST({ version: "10" }).setToken(process.env.token);
+
+const rest = new REST({ version: "10" }).setToken(conf.token);
 
 (async () => {
     try {
         console.log("Started refreshing application (/) commands.");
 
-        await rest.put(Routes.applicationCommands(process.env.guildId), {
+        await rest.put(Routes.applicationCommands(conf.guildId), {
             body: commands,
         });
 

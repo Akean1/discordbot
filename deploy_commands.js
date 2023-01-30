@@ -3,13 +3,6 @@ import { conf } from "./config.js";
 
 const commands = conf.commands.map((cmd) => cmd.data.toJSON());
 
-// for (const command of conf.commands) {
-//   commands.push(command[1].data.toJSON());
-//   // console.log(command[1].data.toJSON());
-// }
-
-// console.log(conf.commands)
-
 const rest = new REST({ version: "10" }).setToken(conf.token);
 (async () => {
   try {

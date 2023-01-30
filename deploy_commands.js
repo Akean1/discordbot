@@ -1,5 +1,4 @@
 import { REST, Routes } from "discord.js";
-import fs from "node:fs";
 import { conf } from "./config.js";
 
 const commands = conf.commands.map((cmd) => cmd.data.toJSON());

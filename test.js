@@ -1,11 +1,3 @@
-// import path from "node:path";
-// import fs from "node:fs";
-//
-// const p = path.dirname(import.meta.url);
-// const compath = path.join(p, "commands");
-// const files = fs.readdirSync(compath);
-// console.log(files);
-//
 import { URL } from "url";
 import fs from "fs";
 

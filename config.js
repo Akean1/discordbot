@@ -10,14 +10,16 @@ const clientId = process.env.clientId;
 const guildId = process.env.guildId;
 
 const __dirname = new URL(".", import.meta.url).pathname;
-const __commanddir = new URL("./commands", import.meta.url).pathname;
-const commandFiles = readdirSync(__commanddir).filter((file) => file.endsWith(".js"));
+const commanddir = new URL("./commands", import.meta.url).pathname;
+const commandfiles = readdirSync(commanddir).filter((file) =>
+  file.endsWith(".js")
+);
 
 const commands = new Collection();
 
-for (const file of commandFiles) {
-  const commandPath = join(__commanddir, file);
-  const command = await import(commandPath);
+for (const file of commandfiles) {
+  const commandfile = join(commanddir, file);
+  const command = await import(commandfile);
   if (!command) {
     console.log(`При загрузке комманды ${file} возникла ошибка.`);
     continue;
@@ -27,15 +29,35 @@ for (const file of commandFiles) {
     commands.set(command.data.name, command);
   } else {
     console.log(
-      `[WARNING] The command at ${commandPath} is missing a required "data" or "execute" property.`
+      `[WARNING] The command at ${commandfile} is missing a required "data" or "execute" property.`
     );
   }
 }
+
+const events = [];
+const eventdir = new URL("./events", import.meta.url).pathname;
+const eventfiles = readdirSync(eventdir).filter((file) => file.endsWith(".js"));
+
+for (const file of eventfiles) {
+  const eventfile = join(eventdir, file);
+  const event = await import(eventfile);
+
+  if (!event) {
+    console.log(`При загрузке события ${file} возникла ошибка.`);
+    continue;
+  }
+
+  if ("name" in event && "execute" in event) {
+    events.push(event.name, event);
+  }
+}
+
 export const conf = {
   token,
   clientId,
   guildId,
   __dirname,
-  __commanddir,
+  __commanddir: commanddir,
   commands,
+  events,
 };

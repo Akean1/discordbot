@@ -1,8 +1,6 @@
 import { REST, Routes } from "discord.js";
 import { conf } from "./config";
 
-
-
 const rest = new REST({ version: "10" }).setToken(conf.token);
 
 (async () => {
@@ -10,7 +8,7 @@ const rest = new REST({ version: "10" }).setToken(conf.token);
         console.log("Started refreshing application (/) commands.");
 
         await rest.put(Routes.applicationCommands(conf.guildId), {
-            body: commands,
+            body: conf.commands,
         });
 
         console.log("Successfully reloaded application (/) commands.");

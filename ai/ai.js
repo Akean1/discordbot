@@ -1,7 +1,10 @@
-import { conf } from "../config.js";
+// import { conf } from "../config.js";
+import dotenv from "dotenv";
 import { Configuration, OpenAIApi } from "openai";
 
-const configuration = new Configuration({ apiKey: conf.aitoken });
+dotenv.config()
+
+const configuration = new Configuration({ apiKey: process.env.aitoken });
 const openai = new OpenAIApi(configuration);
 
 export async function ask(prompt) {
@@ -15,10 +18,13 @@ export async function ask(prompt) {
     presence_penalty: 0,
   });
   const answer = response.data.choices[0].text;
-  console.log(answer);
+  // console.log(answer);
   return answer;
 }
 
-console.log(
-  await ask("What are the names of the planets in the solar system?")
-);
+// const ans = await ask("Hello, let code nodejs project.")
+// console.log(ans)
+
+// console.log(
+//   ask("What are the names of the planets in the solar system?")
+// );

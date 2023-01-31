@@ -3,10 +3,12 @@ import { ask } from "../ai/ai.js";
 
 const data = new SlashCommandBuilder()
   .setName("ask")
-  .setDescription("Задай вопрос chatGPT");
+  .setDescription("Задай вопрос chatGPT.");
 async function execute(interaction) {
-  const answer = await ask(interaction.content);
+  const answer = await ask(interaction.content)
+  console.log(answer)
   await interaction.reply(answer);
 }
 
 export { data, execute };
+

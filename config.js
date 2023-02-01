@@ -8,7 +8,8 @@ dotenv.config();
 const token = process.env.token;
 const clientId = process.env.clientId;
 const guildId = process.env.guildId;
-const aitoken = process.env.aitoken;
+
+export const openaiapitoken = process.env.aitoken;
 
 const __dirname = new URL(".", import.meta.url).pathname;
 const commanddir = new URL("./commands", import.meta.url).pathname;
@@ -53,13 +54,15 @@ for (const file of eventfiles) {
   }
 }
 
+
+
 export const conf = {
   token,
-  aitoken,
+  // aitoken,
   clientId,
   guildId,
   __dirname,
   __commanddir: commanddir,
-  commands,
+  // commands,
   events,
 };

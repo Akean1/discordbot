@@ -1,10 +1,14 @@
-// import { conf } from "../config.js";
-import dotenv from "dotenv";
+import { openaiapitoken } from "../config.js";
+// import dotenv from "dotenv"
 import { Configuration, OpenAIApi } from "openai";
 
-dotenv.config()
 
-const configuration = new Configuration({ apiKey: process.env.aitoken });
+// dotenv.config()
+// const token = process.env.aitoken
+
+const token = openaiapitoken
+
+const configuration = new Configuration({ apiKey: token });
 const openai = new OpenAIApi(configuration);
 
 export async function ask(prompt) {
@@ -22,9 +26,5 @@ export async function ask(prompt) {
   return answer;
 }
 
-// const ans = await ask("Hello, let code nodejs project.")
-// console.log(ans)
-
-// console.log(
-//   ask("What are the names of the planets in the solar system?")
-// );
+const ans = await ask("Hello, let code nodejs project.")
+console.log(ans)
